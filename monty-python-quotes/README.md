@@ -1,7 +1,8 @@
-###
-Monty Python quotes generator for Codecademy Fullstack engineer path.
+### Monty Python quotes memo game 
 
-Create-React-App used. 
+Work in progress. Made for Codecademy Fullstack engineer path.
+
+Create-React-App application. No backend.
 
 First install node-modules:
 
@@ -12,5 +13,5 @@ npm install
 Start the development server:
 
 ```
-npm run start
+npm start
 ```

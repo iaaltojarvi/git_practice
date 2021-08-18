@@ -1,3 +1,29 @@
-.App {
-  /* text-align: center; */
+.view {
+  background-color: #008b8b;
+}
+
+.game {
+  padding: 3em;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cardContainer {
+  background-color: white;
+  height: 12.5em;
+  width: 17.5em;
+  margin: 3em;
+}
+
+.card {
+  display: inline-flex;
+  padding: 1em;
+}
+.quoteText {
+  font-size: 1em;
+  color: #595959;
+}
+.title {
+  padding-top: 3em;
+  padding-left: 3em;
 }
