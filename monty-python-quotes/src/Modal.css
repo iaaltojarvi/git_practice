@@ -1,6 +1,5 @@
 .modal {
-  justify-self: center;
-  align-self: center;
+  align-self: center !important;
   width: 27em;
   height: 15em;
   background: white;

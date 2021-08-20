@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/iframe-has-title */
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { quotes } from './quotes';
 import Card from './Card';
@@ -74,7 +75,7 @@ function App() {
 
   return (
     <div className="view">
-      {win ? <Modal onClose={() => setShow(false)} show={show} restart={handleRestart}>You won!</Modal> :
+      {win ? <div><Modal onClose={() => setShow(false)} show={show} restart={handleRestart}></Modal><iframe src="https://giphy.com/embed/TjFPTVOfd12XEm8WPc" width="464" height="270" frameBorder="0"></iframe><p><a href="https://giphy.com/gifs/montypython-TjFPTVOfd12XEm8WPc" sandbox="" className="gif">via GIPHY</a></p></div> :
         <div>
           <h2 className="title">Click card to start memo game</h2>
           <div className="game">

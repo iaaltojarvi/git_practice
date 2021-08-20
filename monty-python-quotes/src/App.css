@@ -1,8 +1,7 @@
 .view {
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-content: center; */
+  align-content: center;
 }
 
 .game {
@@ -16,4 +15,9 @@
 .title {
   margin-top: 1.5em;
   margin-left: 1.5em;
+}
+
+.gif {
+  text-decoration: none;
+  color: black;
 }
