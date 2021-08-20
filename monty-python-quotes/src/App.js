@@ -1,42 +1,95 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { quotes } from './quotes';
-import logo from './images/mp_logo.png'
+import Card from './Card';
+import Modal from './Modal'
+import { shuffleCards } from './helpers/shuffle';
 import './App.css';
 
 function App() {
 
-  const [cardsClicked, setCardsClicked] = useState(quotes)
-  const [changed, setChanged] = useState(false)
+  const [cards, setCards] = useState(quotes)
+  const [openCards, setOpenCards] = useState([]);
+  const [clearedCards, setClearedCards] = useState({});
+  const [win, setWin] = useState(false)
+  const [show, setShow] = useState(false)
 
-  const handleCardClick = (obj) => {
-    console.log(obj.id)
-    const id = obj.id
-    const ind = cardsClicked.findIndex((c => c.id === id))
-    cardsClicked[ind].open = !cardsClicked[ind].open
-    setChanged(true)
-  }
+  const timeout = useRef(null);
+
+
+  const checkCompletion = useCallback(() => {
+    if (Object.keys(clearedCards).length === quotes.length) {
+    }
+  }, [clearedCards]);
+
+
+  const evaluate = useCallback(() => {
+    const [first, second] = openCards;
+    if (cards[first].quote === cards[second].quote) {
+      setWin(true)
+      setShow(true)
+      setClearedCards((prev) => ({ ...prev, [cards[first].quote]: true }));
+      setOpenCards([]);
+      return;
+    }
+    timeout.current = setTimeout(() => {
+      setOpenCards([]);
+    }, 500);
+  }, [cards, openCards])
+
+  const handleCardClick = (index) => {
+    if (openCards.length === 1) {
+      setOpenCards((prev) => [...prev, index]);
+    } else {
+      clearTimeout(timeout.current);
+      setOpenCards([index]);
+    }
+  };
 
   useEffect(() => {
-    if (changed) {
-      setCardsClicked(cardsClicked)
-      setChanged(false)
+    let timeout = null;
+    if (openCards.length === 2) {
+      timeout = setTimeout(evaluate, 700);
     }
-  }, [cardsClicked, changed])
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [openCards, evaluate]);
+
+  useEffect(() => {
+    checkCompletion();
+  }, [clearedCards, checkCompletion]);
+
+  const checkIsFlipped = (index) => {
+    return openCards.includes(index);
+  };
+
+  const handleRestart = () => {
+    setWin(false)
+    setClearedCards({});
+    setOpenCards([]);
+    setCards(quotes)
+    setCards(shuffleCards(quotes));
+  };
+
 
   return (
     <div className="view">
-      <h1 className="title">Click card to start memo game</h1>
-      <div className="game">
-        {cardsClicked.map((c) =>
-          <div className="cardContainer" key={c.quote} onClick={() => handleCardClick(c)}>
-            <div className="card">
-              {c.open ?
-                <h6 className="quoteText">{c.quote}</h6>
-                : <img src={logo} alt="Monty Python logo" width="250" />}
-            </div>
+      {win ? <Modal onClose={() => setShow(false)} show={show} restart={handleRestart}>You won!</Modal> :
+        <div>
+          <h2 className="title">Click card to start memo game</h2>
+          <div className="game">
+            {cards.map((c, index) =>
+              <Card
+                key={index}
+                card={c}
+                index={index}
+                isFlipped={checkIsFlipped(index)}
+                onClick={handleCardClick}
+              />
+            )}
           </div>
-        )}
-      </div>
+        </div>
+      }
     </div>
   );
 }

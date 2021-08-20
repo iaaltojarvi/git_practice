@@ -1,6 +1,6 @@
 ### Monty Python quotes memo game 
 
-Work in progress. Made for Codecademy Fullstack engineer path.
+Made for Codecademy Fullstack engineer path.
 
 Create-React-App application. No backend.
 

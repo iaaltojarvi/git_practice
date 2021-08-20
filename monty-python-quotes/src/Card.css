@@ -1,0 +1,15 @@
+.card {
+  display: inline-flex;
+  background-color: white;
+  width: 13em;
+  height: 7em;
+  margin: 1em;
+  padding: 0.7em;
+}
+.is-flipped {
+  font-size: 1em;
+  color: #595959;
+}
+.card-back-face {
+  font-size: 1em;
+}
